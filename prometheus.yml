@@ -1,0 +1,30 @@
+global:
+  scrape_interval: 15s  # How often to scrape metrics (every 15 seconds)
+  evaluation_interval: 15s  # How often to evaluate rules
+
+# Scrape configurations - where to collect metrics from
+scrape_configs:
+  # Monitor Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Monitor your homelab servers
+  - job_name: 'homelab-server'
+    static_configs:
+      - targets: ['192.168.40.13:9100']
+        labels:
+          alias: 'monitoring-host'
+      - targets: ['192.168.40.112:9100']
+        labels:
+          alias: 'homelab-server-1'
+      - targets: ['192.168.40.210:9100']
+        labels:
+          alias: 'homelab-server-2'
+
+  # Monitor NVIDIA GPU on monitoring host
+  - job_name: 'nvidia-gpu'
+    static_configs:
+      - targets: ['nvidia-gpu-exporter:9400']
+        labels:
+          alias: 'monitoring-host-gpu'

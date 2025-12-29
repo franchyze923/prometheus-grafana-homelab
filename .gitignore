@@ -1,0 +1,15 @@
+# Docker volumes and data
+prometheus-data/
+grafana-data/
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Node exporter archive
+node_exporter-*.tar.gz
+
+# OS files
+.DS_Store
+Thumbs.db
