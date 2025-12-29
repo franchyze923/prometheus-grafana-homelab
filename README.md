@@ -171,3 +171,36 @@ To monitor more servers:
 **No data in Grafana:**
 - Verify Prometheus data source is configured correctly
 - Check Prometheus can reach the target (Status → Targets)
+
+
+
+---
+
+● Great news - Yes, everything will come back up automatically!
+
+  Here's the status:
+
+  On this machine (192.168.40.13):
+  - ✓ Docker daemon: enabled (starts on boot)
+  - ✓ Prometheus container: restart: unless-stopped (auto-starts with Docker)
+  - ✓ Grafana container: restart: unless-stopped (auto-starts with Docker)
+  - ✓ GPU exporter container: restart: unless-stopped (auto-starts with Docker)
+  - ✓ Node exporter service: enabled (starts on boot)
+
+  On your other servers (192.168.40.112 & 192.168.40.210):
+  - ✓ Node exporter service: enabled (we used systemctl enable when installing)
+
+  What happens on reboot:
+  1. System starts
+  2. Docker daemon starts automatically
+  3. Docker automatically starts all containers marked restart: unless-stopped
+  4. Node exporter starts on all three servers
+  5. Within ~15 seconds, Prometheus will start collecting metrics from all servers and the GPU
+  6. Grafana will be accessible at http://localhost:3001
+
+  All data is persistent because:
+  - Prometheus data is stored in a Docker volume (prometheus-data)
+  - Grafana dashboards/settings are stored in a Docker volume (grafana-data)
+  - These volumes survive reboots
+
+  You're all set! The entire monitoring stack is production-ready.
