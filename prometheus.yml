@@ -28,3 +28,10 @@ scrape_configs:
       - targets: ['nvidia-gpu-exporter:9400']
         labels:
           alias: 'monitoring-host-gpu'
+
+  # Monitor weight dashboard body composition metrics
+  - job_name: 'weight-dashboard'
+    static_configs:
+      - targets: ['weight-exporter:9101']
+        labels:
+          alias: 'body-composition'

@@ -47,6 +47,22 @@ services:
     cap_add:
       - SYS_ADMIN
 
+  # Weight Dashboard Exporter - exposes body composition metrics
+  weight-exporter:
+    build:
+      context: .
+      dockerfile: Dockerfile.weight-exporter
+    container_name: weight-exporter
+    ports:
+      - "9101:9101"
+    restart: unless-stopped
+    networks:
+      - monitoring
+    environment:
+      - WEIGHT_API_URL=http://192.168.40.13:5000/api/weights
+      - EXPORTER_PORT=9101
+      - SCRAPE_INTERVAL=1800
+
 networks:
   monitoring:
     driver: bridge

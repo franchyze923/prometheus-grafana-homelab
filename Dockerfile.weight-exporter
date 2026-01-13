@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements-exporter.txt .
+RUN pip install --no-cache-dir -r requirements-exporter.txt
+
+COPY weight-exporter.py .
+
+# Make the script executable
+RUN chmod +x weight-exporter.py
+
+EXPOSE 9101
+
+CMD ["python", "weight-exporter.py"]
